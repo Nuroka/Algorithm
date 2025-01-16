@@ -1,58 +1,44 @@
-#include <iostream>
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
-
+int n, m;
+int arr[100001];
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	int l, r = 0;
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) {
+		cin >> arr[i];
+		r += arr[i];	
+	}
+	l = *max_element(arr, arr + n);	
 
-    // 초기화 및 입력
-    int N, M;
-    int l,h=0,mid = 0;
-    int result = 0;
-    cin >> N >> M;
+	while (l <= r) {
+		int mid = (l + r) / 2;	
 
-    vector<int> lec(N);
+		int sum = 0, cnt = 0;	
+		for (int i = 0; i < n; i++) {
+			if (sum + arr[i] > mid) {
+				sum = 0;
+				cnt++;
+			}
+			sum += arr[i];
+		}
+		if (sum != 0) cnt++;
 
-    for (int i = 0; i < N; i++) {
-        cin >> lec[i];
-        h += lec[i];
-    }
 
-    l = *max_element(lec.begin(), lec.end());
+		if (cnt > m) {
+			l = mid + 1;
+		}
+		else {
+			r = mid - 1;
+		}
+	}
 
-    while (l <= h) {
-        mid = (l + h) / 2;
-        int cnt = 1;
-        int sum = 0; 
-        for (int i = 0; i < N; i++) {
-            if (mid < lec[i]) {
-                cnt = mid + 1;
-                break;
-            }
-            if (sum + lec[i] <= mid) {
-                sum += lec[i];
-            }
-            else {
-                sum = lec[i];
-                cnt++;
-            }
-
-        }
-        if (cnt <= M) {
-            result = mid;
-            h = mid - 1;
-        }
-        else {
-            l = mid + 1;
-        }
-        
-    }
-
-    cout << result;
-
-    return 0;
+	cout << l;
+	return 0;
 }
+
