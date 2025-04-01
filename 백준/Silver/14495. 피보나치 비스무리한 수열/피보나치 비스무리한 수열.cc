@@ -12,16 +12,12 @@ int main() {
 
     int N;
     cin >> N;
-    vector<long long> v(N+1);
-
-    if (N == 1 || N == 2 || N == 3) {
-        cout << 1;
-        return 0;
-    }
+    vector<long long> v(117);
 
     v[1] = 1;
     v[2] = 1;
     v[3] = 1;
+
 
     for (int i = 4; i <= N; i++) {
         v[i] = v[i - 1] + v[i - 3];
